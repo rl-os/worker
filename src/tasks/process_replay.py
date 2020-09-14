@@ -1,11 +1,21 @@
+import boto3
 from celery.task import Task
 from celery.utils.log import get_task_logger
 
+from src.config import config
 from src.entrypoint import entrypoint
 from src.models.requsets.new_replay import NewReplayRequest
 
 
 log = get_task_logger(__name__)
+
+s3 = boto3.client(
+    's3',
+    endpoint_url=config.s3.endpoint_url,
+    region_name='ru-1a',
+    aws_access_key_id=config.s3.access_key_id,
+    aws_secret_access_key=config.s3.secret_access_key,
+)
 
 
 @entrypoint.register_task

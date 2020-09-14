@@ -1,11 +1,11 @@
 from typing import List
 
-from src.achievement import AchievementBase
-from src.models.score import Score, ParsedScore
+from src.base_achievement import BaseAchievement
+from src.models.score import ParsedScore
 from src.models.achievement_data import AchievementData
 
 
-class Combo(AchievementBase):
+class Combo(BaseAchievement):
     base = {
         "id": "osu-combo-{mode}-{index}",
         "name": "{index} Combo (osu!{mode})",
