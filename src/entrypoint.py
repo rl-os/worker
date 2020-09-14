@@ -7,8 +7,8 @@ from src.config import config
 
 
 class EntryPoint(celery.Celery):
-    def __init__(self, config_path: str = "config.yaml", **kwargs):
-        self.read_config(config_path)
+    def __init__(self):
+        self.read_config(os.getenv("CONFIG_PATH") or "config.yaml")
 
         super().__init__(
             'rl-worker',
@@ -64,4 +64,4 @@ class EntryPoint(celery.Celery):
         pass
 
 
-entrypoint = EntryPoint(os.getenv("CONFIG_PATH"))
+entrypoint = EntryPoint()
