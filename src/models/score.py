@@ -7,28 +7,27 @@ from src.models.user import UserShort
 
 @dataclass
 class ParsedScore:
-    mode: str
+    mode: str  # osu, taiko, catch, mania
+    enabled_mods: List[str]
     count50: int
     count100: int
     count300: int
     countgeki: int
     countkatu: int
     countmiss: int
-    enabled_mods: List[str]
     maxcombo: int
     passed: int
     perfect: int
     score: int
     frame: int
+    playtime: int
+
+    accuracy: Union[float, None] = None
+    pp: Union[float, None] = None
 
 
 @dataclass
-class Score:
+class UpdateScore:
     id: int
     user: UserShort
-    game_id: Union[int, None]
-    game: Union[dict, None]
-    slot: Union[int, None]
-    team: Union[int, None]
-
     parsed: ParsedScore

@@ -1,5 +1,7 @@
 from cool_config import *
 
+__all__ = ['config']
+
 
 class Config(AbstractConfig):
     class rl(Section):
