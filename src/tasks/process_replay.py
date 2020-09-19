@@ -4,10 +4,13 @@ import boto3
 from celery.task import Task
 from celery.utils.log import get_task_logger
 
+import src.client
+from src.client.rest import ApiException
+
 from src.config import config
 from src.entrypoint import entrypoint
+from src.models.score import ParsedScore
 from src.models.requsets.new_replay import NewReplayRequest
-from src.models.score import ParsedScore, UpdateScore
 
 log = get_task_logger(__name__)
 
@@ -18,6 +21,12 @@ s3 = boto3.client(
     aws_access_key_id=config.s3.access_key_id,
     aws_secret_access_key=config.s3.secret_access_key,
 )
+
+configuration = src.client.Configuration()
+configuration.host = config.rl.api_url
+configuration.api_key = config.rl.access_token
+
+api_instance = src.client.InternalApi(src.client.ApiClient(configuration))
 
 
 @entrypoint.register_task
@@ -49,6 +58,7 @@ class ProcessReplay(Task):
             # todo: this
         else:
             log.debug('save results')
+            self._send_score(req, parsed)
 
     def _load_replay(self, bucket: str, key: str) -> bytearray:
         log.debug('loading replay from s3 bucket')
@@ -65,20 +75,30 @@ class ProcessReplay(Task):
         pass
 
     def _send_score(self, req: NewReplayRequest, parsed: ParsedScore):
-        data = UpdateScore(
-            id=req.replay_id,
-            user=req.user,
+        body = src.client.UpdateScoreRequest(
+            replay_id=req.replay_id,
+            user_id=req.user.id,
             parsed=parsed,
         )
 
-        # todo: api request
+        try:
+            # Score submission
+            api_instance.api_internal_scores_submit_post(body)
+        except ApiException as e:
+            self.retry(
+                max_retries=3,
+                exc=e,
+            )
 
 
 if __name__ == '__main__':
     # noinspection PyCallByClass
-    ProcessReplay.run({
-        "replay_id": 1,
-        "bucket": "replays",
-        "key": "replay-1-somedandomuuid.osr",
-        "user": {}  # todo
+    ProcessReplay.apply_async(kwargs={
+        'data': {
+            "replay_id": 1,
+            "bucket": "replays",
+            "key": "replay-1-somedandomuuid.osr",
+            "user": {}
+        }
     })
+

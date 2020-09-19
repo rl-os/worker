@@ -1,11 +1,10 @@
 from typing import List, Union
 
-from dataclasses import dataclass
-
+from src.utils import nested_dataclass
 from src.models.user import UserShort
 
 
-@dataclass
+@nested_dataclass
 class ParsedScore:
     mode: str  # osu, taiko, catch, mania
     enabled_mods: List[str]
@@ -26,7 +25,7 @@ class ParsedScore:
     pp: Union[float, None] = None
 
 
-@dataclass
+@nested_dataclass
 class UpdateScore:
     id: int
     user: UserShort

@@ -7,6 +7,14 @@ from src.config import config
 
 
 class EntryPoint(celery.Celery):
+    TASK_ROUTES = {
+        'rl.worker.process_replay': {
+            'queue': 'rl.worker.process_replay',
+            'routing_key': 'rl.worker.process_replay',
+            'prefetch_count': 1,
+        },
+    }
+
     def __init__(self):
         self.read_config(os.getenv("CONFIG_PATH") or "config.yaml")
 
@@ -29,13 +37,7 @@ class EntryPoint(celery.Celery):
 
             # WARNING: !!!
             # нужно для каждой задачи указать свою очередь
-            CELERY_ROUTES={
-                'rl.worker.process_replay': {
-                    'queue': 'rl.worker.process_replay',
-                    'routing_key': 'rl.worker.process_replay',
-                    'prefetch_count': 1,
-                },
-            }
+            CELERY_ROUTES=self.TASK_ROUTES,
         )
 
         self.on_after_configure.connect(self.postfork)

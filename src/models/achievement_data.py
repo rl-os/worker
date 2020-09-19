@@ -1,7 +1,7 @@
-from dataclasses import dataclass
+from src.utils import nested_dataclass
 
 
-@dataclass
+@nested_dataclass
 class AchievementData:
     id: str
     name: str

@@ -1,22 +1,23 @@
-from dataclasses import dataclass
-from datetime import datetime
 from typing import List, Any
 
+from datetime import datetime
+from src.utils import nested_dataclass
 
-@dataclass
+
+@nested_dataclass
 class Country:
     code: str
     name: str
 
 
-@dataclass
+@nested_dataclass
 class Cover:
     custom_url: str
     url: str
     id: None
 
 
-@dataclass
+@nested_dataclass
 class UserShort:
     avatar_url: str
     country_code: str

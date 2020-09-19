@@ -1,15 +1,16 @@
-from dataclasses import dataclass
 from typing import List, Optional
+
 from datetime import datetime
+from src.utils import nested_dataclass
 
 
-@dataclass
+@nested_dataclass
 class Failtimes:
     fail: List[int]
     exit: List[int]
 
 
-@dataclass
+@nested_dataclass
 class Beatmap:
     difficulty_rating: float
     id: int

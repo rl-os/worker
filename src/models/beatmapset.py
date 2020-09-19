@@ -1,12 +1,12 @@
-from dataclasses import dataclass
 from typing import List, Any
 from datetime import datetime
 
+from src.utils import nested_dataclass
 from src.models.user import UserShort
 from src.models.beatmap import Beatmap
 
 
-@dataclass
+@nested_dataclass
 class Covers:
     cover: str
     cover_2_x: str
@@ -18,30 +18,30 @@ class Covers:
     slimcover_2_x: str
 
 
-@dataclass
+@nested_dataclass
 class Availability:
     download_disabled: bool
     more_information: None
 
 
-@dataclass
+@nested_dataclass
 class Description:
     description: str
 
 
-@dataclass
+@nested_dataclass
 class Genre:
     id: int
     name: str
 
 
-@dataclass
+@nested_dataclass
 class Hype:
     current: int
     required: int
 
 
-@dataclass
+@nested_dataclass
 class BeatmapSet:
     artist: str
     artist_unicode: str
