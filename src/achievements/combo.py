@@ -1,7 +1,7 @@
 from typing import List
 
 from src.base_achievement import BaseAchievement
-from src.models.score import ParsedScore
+from src.models.replay import ParsedScore
 from src.models.achievement_data import AchievementData
 
 

@@ -33,7 +33,7 @@ class EntryPoint(celery.Celery):
 
             # WARNING: отключаем сохранение статуса задачи
             # позволяет повысить производительность тк не пишется в sqltite3 и другие статусы задач
-            CELERY_IGNORE_RESULT=True,
+            # CELERY_IGNORE_RESULT=True,
 
             # WARNING: !!!
             # нужно для каждой задачи указать свою очередь

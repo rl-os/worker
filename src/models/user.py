@@ -31,7 +31,6 @@ class UserShort:
     pm_friends_only: bool
     profile_colour: None
     username: str
-    email: str
     country: Country
     cover: Cover
     current_mode_rank: int

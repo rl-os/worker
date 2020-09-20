@@ -3,7 +3,7 @@ import math
 from typing import Dict, List, Any
 
 from src.models.achievement_data import AchievementData
-from src.models.score import UpdateScore
+from src.models.replay import UpdateScore
 
 
 class BaseAchievement(abc.ABC):
