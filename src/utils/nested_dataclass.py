@@ -1,9 +1,10 @@
 from dataclasses import dataclass, is_dataclass
+from dataclasses_json import dataclass_json
 
 
 def nested_dataclass(*args, **kwargs):
     def wrapper(cls):
-        cls = dataclass(cls, **kwargs)
+        cls = dataclass_json(dataclass(cls, **kwargs))
         original_init = cls.__init__
 
         def __init__(self, *args, **kwargs):

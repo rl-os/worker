@@ -1,11 +1,11 @@
-from typing import Any, Dict, List
+from typing import Any, Dict
 
 import boto3
 from celery.task import Task
 from celery.utils.log import get_task_logger
 
 import src.client
-from src.client.rest import ApiException
+from src.client import UpdateScoreRequestParsed
 
 from src.config import config
 from src.entrypoint import entrypoint
@@ -37,7 +37,6 @@ class ProcessReplay(Task):
     name = 'rl.worker.process_replay'
 
     acks_late = True
-    max_retries = None
     default_retry_delay = 15 * 60  # 15 min
 
     def run(self, data: Dict[str, Any]):
@@ -53,23 +52,26 @@ class ProcessReplay(Task):
         try:
             return self._process(req)
         except Exception as exc:
-            raise self.retry(exc=exc)
+            raise self.retry(
+                exc=exc,
+                max_retries=999,  # пытаемся обработать запрос до тех пока не надоест
+            )
 
     def _process(self, req: NewReplayRequest) -> None:
         replay_file = self._load_replay(req.bucket, req.key)
 
-        parsed = self._parse_replay(replay_file)
+        replay = self._parse_replay(replay_file)
 
-        score = self._calculate(parsed)
+        score = self._calculate(replay)
 
-        is_cheat = self._anticheat(parsed, score)
+        is_cheat = self._anticheat(replay, score)
 
         if is_cheat is True:
             log.warn(f'found cheater with id={req.user.id}')
             # todo: this
         else:
             log.info('save results')
-            self._send_score(req, parsed)
+            self._send_score(req, replay)
 
     def _load_replay(self, bucket: str, key: str) -> bytes:
         log.info('loading replay from s3 bucket')
@@ -80,27 +82,28 @@ class ProcessReplay(Task):
     def _parse_replay(self, replay_data: bytes) -> Replay:
         return ReplayParser.from_bytes(replay_data)
 
-    def _calculate(self, parsed: Replay) -> Score:
+    def _calculate(self, replay: Replay) -> Score:
+        # TODO: this
+        return Score(
+            replay=replay,
+            accuracy=99.0,
+            pp=100,
+        )
+
+    def _anticheat(self, replay: Replay, score) -> bool:
         pass
 
-    def _anticheat(self, parsed: Replay, score) -> bool:
-        pass
-
-    def _send_score(self, req: NewReplayRequest, parsed: Replay):
+    def _send_score(self, req: NewReplayRequest, replay: Replay):
         body = src.client.UpdateScoreRequest(
             replay_id=req.replay_id,
             user_id=req.user.id,
-            parsed=parsed,
+            parsed=UpdateScoreRequestParsed(
+                **replay.__dict__
+            ),
         )
 
-        try:
-            # Score submission
-            api_instance.api_internal_scores_submit_post(body)
-        except ApiException as e:
-            self.retry(
-                max_retries=3,
-                exc=e,
-            )
+        # Score submission
+        # api_instance.api_internal_scores_submit_post(body)
 
 
 if __name__ == '__main__':
@@ -138,4 +141,3 @@ if __name__ == '__main__':
             }
         }
     })
-

@@ -30,4 +30,4 @@ class Replay:
     life_bar_graph: str = None
     timestamp: datetime.datetime = None
     replay_length: int = 0
-    play_data: List[ReplayEvent] = None
+    play_data: List[ReplayEvent] = field(default_factory=list)

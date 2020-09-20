@@ -65,7 +65,7 @@ class UpdateScoreRequestParsed(object):
         'pp': 'pp'
     }
 
-    def __init__(self, mode=None, enabled_mods=None, count50=None, count100=None, count300=None, countgeki=None, countkatu=None, countmiss=None, maxcombo=None, passed=None, perfect=None, score=None, frame=None, playtime=None, accuracy=None, pp=None):  # noqa: E501
+    def __init__(self, mode=None, enabled_mods=None, count50=None, count100=None, count300=None, countgeki=None, countkatu=None, countmiss=None, maxcombo=None, passed=None, perfect=None, score=None, frame=None, playtime=None, accuracy=None, pp=None, **kwargs):  # noqa: E501
         """UpdateScoreRequestParsed - a model defined in Swagger"""  # noqa: E501
         self._mode = None
         self._enabled_mods = None
