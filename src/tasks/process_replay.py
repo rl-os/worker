@@ -71,7 +71,7 @@ class ProcessReplay(Task):
             # todo: this
         else:
             log.info('save results')
-            self._send_score(req, replay)
+            self._send_score(req, score)
 
     def _load_replay(self, bucket: str, key: str) -> bytes:
         log.info('loading replay from s3 bucket')
@@ -90,15 +90,17 @@ class ProcessReplay(Task):
             pp=100,
         )
 
-    def _anticheat(self, replay: Replay, score) -> bool:
-        pass
+    def _anticheat(self, replay: Replay, score: Score) -> bool:
+        return False
 
-    def _send_score(self, req: NewReplayRequest, replay: Replay):
+    def _send_score(self, req: NewReplayRequest, score: Score):
         body = src.client.UpdateScoreRequest(
             replay_id=req.replay_id,
             user_id=req.user.id,
             parsed=UpdateScoreRequestParsed(
-                **replay.__dict__
+                **score.replay.__dict__,
+                pp=score.pp,
+                accuracy=score.accuracy,
             ),
         )
 
@@ -107,37 +109,41 @@ class ProcessReplay(Task):
 
 
 if __name__ == '__main__':
+    import logging
+
+    logging.basicConfig(level=logging.DEBUG)
+
+    log = logging.getLogger(__name__)
+
     # noinspection PyCallByClass
-    ProcessReplay.apply_async(kwargs={
-        'data': {
-            "replay_id": 1,
-            "bucket": "replays",
-            "key": "replay-3af6b346-a185-46b0-af70-b5115f0f3507.osr",
-            "user": {
-                "avatar_url": "https://301222.selcdn.ru/akasi/avatars/1.png",
-                "country_code": "RU",
-                "default_group": "default",
-                "id": 100,
-                "is_active": True,
-                "is_bot": False,
-                "is_online": True,
-                "is_supporter": True,
-                "last_visit": "2020-09-20T14:41:13+00:00",
-                "pm_friends_only": True,
-                "profile_colour": None,
-                "username": "deissh",
-                "country": {
-                    "code": "RU",
-                    "name": "Russian Federation"
-                },
-                "cover": {
-                    "custom_url": "https://301222.selcdn.ru/akasi/bg/1.jpg",
-                    "url": "https://301222.selcdn.ru/akasi/bg/1.jpg",
-                    "id": None
-                },
-                "current_mode_rank": 1,
-                "groups": [],
-                "support_level": 2
-            }
+    ProcessReplay.run({
+        "replay_id": 1,
+        "bucket": "replays",
+        "key": "replay-3af6b346-a185-46b0-af70-b5115f0f3507.osr",
+        "user": {
+            "avatar_url": "https://301222.selcdn.ru/akasi/avatars/1.png",
+            "country_code": "RU",
+            "default_group": "default",
+            "id": 100,
+            "is_active": True,
+            "is_bot": False,
+            "is_online": True,
+            "is_supporter": True,
+            "last_visit": "2020-09-20T14:41:13+00:00",
+            "pm_friends_only": True,
+            "profile_colour": None,
+            "username": "deissh",
+            "country": {
+                "code": "RU",
+                "name": "Russian Federation"
+            },
+            "cover": {
+                "custom_url": "https://301222.selcdn.ru/akasi/bg/1.jpg",
+                "url": "https://301222.selcdn.ru/akasi/bg/1.jpg",
+                "id": None
+            },
+            "current_mode_rank": 1,
+            "groups": [],
+            "support_level": 2
         }
     })
