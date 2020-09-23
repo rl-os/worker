@@ -67,7 +67,7 @@ class ProcessReplay(Task):
         is_cheat = self._anticheat(replay, score)
 
         if is_cheat is True:
-            log.warn(f'found cheater with id={req.user.id}')
+            log.warning(f'found cheater with id={req.user.id}')
             # todo: this
         else:
             log.info('save results')
