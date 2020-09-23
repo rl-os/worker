@@ -1,19 +1,15 @@
-from typing import Union
-
+from pydantic import BaseModel
 from src.models.replay import Replay
-from src.utils import nested_dataclass
 from src.models.user import UserShort
 
 
-@nested_dataclass
-class Score:
+class Score(BaseModel):
     replay: Replay
     accuracy: float
     pp: float
 
 
-@nested_dataclass
-class UpdateScore:
+class UpdateScore(BaseModel):
     id: int
     user: UserShort
     parsed: Score

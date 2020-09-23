@@ -14,6 +14,7 @@ certifi = "^2020.6.20"
 six = "^1.15.0"
 python_dateutil = "^2.8.1"
 dataclasses-json = "^0.5.2"
+pydantic = "^1.6.1"
 
 [tool.poetry.dev-dependencies]
 boto3-stubs = "^1.15.1"

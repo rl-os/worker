@@ -1,17 +1,15 @@
 from typing import List, Optional
 
+from pydantic import BaseModel
 from datetime import datetime
-from src.utils import nested_dataclass
 
 
-@nested_dataclass
-class Failtimes:
+class Failtimes(BaseModel):
     fail: List[int]
     exit: List[int]
 
 
-@nested_dataclass
-class Beatmap:
+class Beatmap(BaseModel):
     difficulty_rating: float
     id: int
     mode: str
@@ -26,7 +24,7 @@ class Beatmap:
     count_spinners: int
     count_total: int
     cs: int
-    deleted_at: None
+    deleted_at: Optional[datetime] = None
     drain: int
     hit_length: int
     is_scoreable: bool
@@ -38,5 +36,5 @@ class Beatmap:
     status: str
     total_length: int
     url: str
-    failtimes: Failtimes
+    failtimes: Optional[Failtimes] = None
     max_combo: Optional[int] = None

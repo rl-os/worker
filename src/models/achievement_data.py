@@ -1,8 +1,7 @@
-from src.utils import nested_dataclass
+from pydantic import BaseModel
 
 
-@nested_dataclass
-class AchievementData:
+class AchievementData(BaseModel):
     id: str
     name: str
     description: str

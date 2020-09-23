@@ -1,10 +1,12 @@
+from pydantic import BaseModel
+
 from src.models.user import UserShort
-from src.utils import nested_dataclass
+from src.models.beatmap import Beatmap
 
 
-@nested_dataclass
-class NewReplayRequest:
+class NewReplayRequest(BaseModel):
     replay_id: int
-    user: UserShort
     bucket: str
     key: str
+    user: UserShort
+    beatmap: Beatmap

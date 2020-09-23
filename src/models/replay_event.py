@@ -1,8 +1,7 @@
-from src.utils import nested_dataclass
+from pydantic import BaseModel
 
 
-@nested_dataclass
-class ReplayEvent(object):
+class ReplayEvent(BaseModel):
     time_since_previous_action: int
     x: float
     y: float

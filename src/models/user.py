@@ -1,24 +1,21 @@
-from typing import List, Any
+from typing import List, Any, Union
 
 from datetime import datetime
-from src.utils import nested_dataclass
+from pydantic import BaseModel
 
 
-@nested_dataclass
-class Country:
+class Country(BaseModel):
     code: str
     name: str
 
 
-@nested_dataclass
-class Cover:
+class Cover(BaseModel):
     custom_url: str
     url: str
-    id: None
+    id: Union[int, None]
 
 
-@nested_dataclass
-class UserShort:
+class UserShort(BaseModel):
     avatar_url: str
     country_code: str
     default_group: str
@@ -29,7 +26,7 @@ class UserShort:
     is_supporter: bool
     last_visit: datetime
     pm_friends_only: bool
-    profile_colour: None
+    profile_colour: Union[str, None]
     username: str
     country: Country
     cover: Cover

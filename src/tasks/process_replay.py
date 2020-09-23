@@ -61,8 +61,10 @@ class ProcessReplay(Task):
         replay_file = self._load_replay(req.bucket, req.key)
 
         replay = self._parse_replay(replay_file)
+        log.info(f"parsed replay: {replay.dict(exclude={'life_bar_graph', 'play_data'})}")
 
         score = self._calculate(replay)
+        log.info(f"score: {score.dict(include={'pp', 'accuracy'})}")
 
         is_cheat = self._anticheat(replay, score)
 

@@ -1,15 +1,13 @@
 from typing import List, Set
 
-import datetime
-from dataclasses import field
+from datetime import datetime
+from pydantic import BaseModel
 
 from src.models.replay_event import ReplayEvent
-from src.utils import nested_dataclass
 from src.models.replay_mods import GameMode, Mod
 
 
-@nested_dataclass
-class Replay:
+class Replay(BaseModel):
     offset: int = 0
     game_mode: GameMode = None
     game_version: int = None
@@ -26,8 +24,8 @@ class Replay:
     max_combo: int = None
     is_perfect_combo: bool = None
     mod_combination: int = None
-    mods: List[Mod] = field(default_factory=list)
+    mods: List[Mod] = []
     life_bar_graph: str = None
-    timestamp: datetime.datetime = None
+    timestamp: datetime = None
     replay_length: int = 0
-    play_data: List[ReplayEvent] = field(default_factory=list)
+    play_data: List[ReplayEvent] = []

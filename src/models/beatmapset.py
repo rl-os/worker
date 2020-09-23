@@ -1,13 +1,13 @@
 from typing import List, Any
+
+from pydantic import BaseModel
 from datetime import datetime
 
-from src.utils import nested_dataclass
 from src.models.user import UserShort
 from src.models.beatmap import Beatmap
 
 
-@nested_dataclass
-class Covers:
+class Covers(BaseModel):
     cover: str
     cover_2_x: str
     card: str
@@ -18,31 +18,26 @@ class Covers:
     slimcover_2_x: str
 
 
-@nested_dataclass
-class Availability:
+class Availability(BaseModel):
     download_disabled: bool
     more_information: None
 
 
-@nested_dataclass
-class Description:
+class Description(BaseModel):
     description: str
 
 
-@nested_dataclass
-class Genre:
+class Genre(BaseModel):
     id: int
     name: str
 
 
-@nested_dataclass
-class Hype:
+class Hype(BaseModel):
     current: int
     required: int
 
 
-@nested_dataclass
-class BeatmapSet:
+class BeatmapSet(BaseModel):
     artist: str
     artist_unicode: str
     covers: Covers

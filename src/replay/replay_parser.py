@@ -107,7 +107,12 @@ class ReplayParser:
             events = [event.split('|') for event in string.split(',')]
 
             r.play_data = [
-                ReplayEvent(int(event[0]), float(event[1]), float(event[2]), int(event[3]))
+                ReplayEvent(
+                    time_since_previous_action=int(event[0]),
+                    x=float(event[1]),
+                    y=float(event[2]),
+                    keys_pressed=int(event[3])
+                )
                 for event in events
             ]
 
