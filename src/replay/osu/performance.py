@@ -23,6 +23,12 @@ class OsuPerformance:
     _num100: int
     _num300: int
     _numMiss: int
+    _maxCombo: int
+
+    # beatmap stats
+    _count_total: int
+    _ar: float
+    _od: float
 
     def __init__(self, beatmap: Beatmap, replay: Replay):
         pass
@@ -66,13 +72,50 @@ class OsuPerformance:
 
     def compute_aim(self):
         # TODO: fixme
-        raw_aim = .1
+        raw_aim: float = .1
 
         # TODO: touch device
 
-        aim_value = math.pow(
+        self.aim = math.pow(
             5.0 * max(1.0, raw_aim / 0.0675) - 4.0, 3.0
         ) / 100000.0
 
         total_hits = self.total_hits
 
+        length_bonus = .95 + .4 * min(1.0, total_hits / 2000.0) + (
+            math.log10(total_hits / 2000.0) * 0.5
+            if total_hits > 2000
+            else .0
+        )
+
+        self.aim *= length_bonus
+        self.aim *= math.pow(.97, self._numMiss)
+
+        if self._maxCombo > 0:
+            self.aim *= min(
+                (math.pow(self._maxCombo, .8) / math.pow(self._count_total, .8)),
+                1.0
+            )
+
+        approach_rate_factor = 1.0
+        if self._ar > 10.33:
+            approach_rate_factor += .3 * (self._ar - 10.33)
+        else:
+            approach_rate_factor += .01 * (8.0 - self._ar)
+
+        self.aim *= approach_rate_factor
+
+        if Mod.Easy in self._mods:
+            self.aim *= 1.0 + .04 * (12.0 - self._ar)
+
+        if Mod.Flashlight in self._mods:
+            pass
+            # TODO: this
+            # _aimValue *= 1.0f + 0.35f * std::min(1.0f, static_cast<f32>(numTotalHits) / 200.0f) +
+            #          	(numTotalHits > 200 ? 0.3f * std::min(1.0f, static_cast<f32>(numTotalHits - 200) / 300.0f) +
+            #          	(numTotalHits > 500 ? static_cast<f32>(numTotalHits - 500) / 1200.0f : 0.0f) : 0.0f);
+
+        # scale the aim value with accuracy _slightly_
+        self.aim *= .5 + self.acc / 2.0
+        # it is important to also consider accuracy difficulty when doing that
+        self.aim *= .98 + (math.pow(self._od, 2) / 2500)
