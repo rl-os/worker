@@ -16,7 +16,7 @@ High performance [osu!](https://osu.ppy.sh) score server which isn't based on [R
 ```sh
 # install poetry (osx / linux / bash-on-windows)
 $ curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python
-# powershell (windows only)
+# powershell
 $ (Invoke-WebRequest -Uri https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py -UseBasicParsing).Content | python
 
 # setup all dependencies
