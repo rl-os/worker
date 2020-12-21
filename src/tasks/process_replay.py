@@ -1,7 +1,6 @@
 from typing import Any, Dict
 
 import boto3
-from celery.exceptions import
 from celery.task import Task
 from celery.utils.log import get_task_logger
 
