@@ -12,13 +12,21 @@ class Config(AbstractConfig):
         url = String
         client_properties = Dict
 
-    class s3(Section):
-        region_name = String
+    class storage(Section):
+        # in s3 its a bucket name
+        replays_path = String
+        beatmaps_path = String
 
-        secret_access_key = String
-        access_key_id = String
+        # TODO: this
+        current_storage = String
 
-        endpoint_url = String
+        class s3(Section):
+            region_name = String
+
+            secret_access_key = String
+            access_key_id = String
+
+            endpoint_url = String
 
 
 config = Config()

@@ -15,12 +15,14 @@ six = "^1.15.0"
 python_dateutil = "^2.8.1"
 dataclasses-json = "^0.5.2"
 pydantic = "^1.6.1"
+requests = "^2.25.1"
 
 [tool.poetry.dev-dependencies]
 boto3-stubs = "^1.15.1"
 
 [tool.poetry.scripts]
 worker = 'worker:run'
+init = 'init:run'
 
 [build-system]
 requires = ["poetry>=0.12"]

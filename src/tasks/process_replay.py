@@ -1,6 +1,7 @@
 from typing import Any, Dict
 
 import boto3
+from celery.exceptions import
 from celery.task import Task
 from celery.utils.log import get_task_logger
 
@@ -14,15 +15,16 @@ from src.replay import ReplayParser
 from src.models.score import Score
 from src.models.replay import Replay
 from src.models.requsets.new_replay import NewReplayRequest
+from src.utils.replay_name import replay_name
 
 log = get_task_logger(__name__)
 
 s3 = boto3.client(
     's3',
-    endpoint_url=config.s3.endpoint_url,
+    endpoint_url=config.storage.s3.endpoint_url,
     region_name='ru-1a',
-    aws_access_key_id=config.s3.access_key_id,
-    aws_secret_access_key=config.s3.secret_access_key,
+    aws_access_key_id=config.storage.s3.access_key_id,
+    aws_secret_access_key=config.storage.s3.secret_access_key,
 )
 
 configuration = src.client.Configuration()
@@ -49,6 +51,11 @@ class ProcessReplay(Task):
         req = NewReplayRequest(**data)
 
         log.debug('process replay from request data')
+
+        log.debug('check replay name')
+        if not replay_name(req.key):
+            raise KeyError('invalid replay name')
+
         try:
             return self._process(req)
         except Exception as exc:
@@ -58,7 +65,7 @@ class ProcessReplay(Task):
             )
 
     def _process(self, req: NewReplayRequest) -> None:
-        replay_file = self._load_replay(req.bucket, req.key)
+        replay_file = self._load_replay(config.storage.replays_path, req.key)
 
         replay = self._parse_replay(replay_file)
         log.info(f"parsed replay: {replay.dict(exclude={'life_bar_graph', 'play_data'})}")
@@ -120,7 +127,6 @@ if __name__ == '__main__':
     # noinspection PyCallByClass
     ProcessReplay.run({
         "replay_id": 1,
-        "bucket": "replays",
         "key": "replay-3af6b346-a185-46b0-af70-b5115f0f3507.osr",
         "user": {
             "avatar_url": "https://301222.selcdn.ru/akasi/avatars/1.png",
