@@ -473,6 +473,14 @@ optional = false
 python-versions = "*"
 
 [[package]]
+name = "oppai"
+version = "3.3.0"
+description = "osu! pp and difficulty calculator, C bindings"
+category = "main"
+optional = false
+python-versions = "*"
+
+[[package]]
 name = "pydantic"
 version = "1.6.1"
 description = "Data validation and settings management using python 3.6 type hinting"
@@ -612,7 +620,7 @@ testing = ["jaraco.itertools", "func-timeout"]
 [metadata]
 lock-version = "1.1"
 python-versions = ">=3.7"
-content-hash = "1485fcb9a776b6696a1cd906fd018153bbc9bdb0ca2f70ebcfa13504ee718f6d"
+content-hash = "debc9716738b02ddecc34889a4774fb8684a4a1303eebb7bcea06fd49ff32170"
 
 [metadata.files]
 amqp = [
@@ -682,6 +690,37 @@ marshmallow-enum = [
 mypy-extensions = [
     {file = "mypy_extensions-0.4.3-py2.py3-none-any.whl", hash = "sha256:090fedd75945a69ae91ce1303b5824f428daf5a028d2f6ab8a299250a846f15d"},
     {file = "mypy_extensions-0.4.3.tar.gz", hash = "sha256:2d82818f5bb3e369420cb3c4060a7970edba416647068eb4c5343488a6c604a8"},
+]
+oppai = [
+    {file = "oppai-3.3.0-cp27-cp27m-manylinux1_i686.whl", hash = "sha256:f1b41b5d66bc891c1b72a051b3fc10321a6110eb0f3fabbf748c5f0cba0e65e2"},
+    {file = "oppai-3.3.0-cp27-cp27m-manylinux1_x86_64.whl", hash = "sha256:9e2bcc21a48d6bffb7f1ae64128dc8bed10c6dea9a2958826851e55f571adc81"},
+    {file = "oppai-3.3.0-cp27-cp27m-manylinux2010_i686.whl", hash = "sha256:a07e83d0a0cc04c4c771e7b5130b21905a736314ca0d93c73ea40a3361ba307d"},
+    {file = "oppai-3.3.0-cp27-cp27m-manylinux2010_x86_64.whl", hash = "sha256:a9db01c7c65581f82476a6680fef22e88657d28fe89aaef9ad98a357aa692255"},
+    {file = "oppai-3.3.0-cp27-cp27mu-manylinux1_i686.whl", hash = "sha256:03ea32db5cdf9e46f2d53dedfe3b5f49ed9d8f45e7c4413d44e71e8aa561dcfc"},
+    {file = "oppai-3.3.0-cp27-cp27mu-manylinux1_x86_64.whl", hash = "sha256:2def8afa95686b204f3c29bcd9e869f1b6c3913a0e379e7de72dc2122042b2d9"},
+    {file = "oppai-3.3.0-cp27-cp27mu-manylinux2010_i686.whl", hash = "sha256:05fa44f7367a5492799929b1ccd059489d9225e5056baeeae2bf5c849fd9bfc6"},
+    {file = "oppai-3.3.0-cp27-cp27mu-manylinux2010_x86_64.whl", hash = "sha256:51c8721376bbfe26d82a6ae4c37e224a6ebc0154cdc773d2c58883b7563040c2"},
+    {file = "oppai-3.3.0-cp35-cp35m-manylinux1_i686.whl", hash = "sha256:be4a59658045c5ee23df0df3392ef24b86c0fb5ad5786653ac30fa8e2d818474"},
+    {file = "oppai-3.3.0-cp35-cp35m-manylinux1_x86_64.whl", hash = "sha256:b5efc846c4e66210309f70e6d064c55b7044a03010b0196e63acd4b1514df1a2"},
+    {file = "oppai-3.3.0-cp35-cp35m-manylinux2010_i686.whl", hash = "sha256:6d43916498cd58ef3da10b8b00d4c293d1835b0ef18fe1351062af19126a5e57"},
+    {file = "oppai-3.3.0-cp35-cp35m-manylinux2010_x86_64.whl", hash = "sha256:2b96559a8ace6f7ecd2fee61a8f7d04f4534e1ff1d1fde9951af3cb82790f085"},
+    {file = "oppai-3.3.0-cp36-cp36m-manylinux1_i686.whl", hash = "sha256:696e97a54e9d8611b4cdbbbae125d9d32e895a6aeda77e28521b6e450554a985"},
+    {file = "oppai-3.3.0-cp36-cp36m-manylinux1_x86_64.whl", hash = "sha256:2b38ea82d16c55d75dbdaab939f177f63e313b08726dc43e78ba2c15c1addd83"},
+    {file = "oppai-3.3.0-cp36-cp36m-manylinux2010_i686.whl", hash = "sha256:26b1dc4952a90dfa8e7ef89ca6e575e5f40044913a26c58278245b09b4b05b3b"},
+    {file = "oppai-3.3.0-cp36-cp36m-manylinux2010_x86_64.whl", hash = "sha256:b2239c0391f1cf634cf9789d3612f7c425ac65c51a40676d3c110c3cf6fab005"},
+    {file = "oppai-3.3.0-cp37-cp37m-manylinux1_i686.whl", hash = "sha256:916b09b3d57481eae706bd66c1b9075beb0276587ff56d196a765d033bce2f85"},
+    {file = "oppai-3.3.0-cp37-cp37m-manylinux1_x86_64.whl", hash = "sha256:ccf34dc0daa82c73232082efc56126fe11b3a482e161d5e2c499b3052ca51b50"},
+    {file = "oppai-3.3.0-cp37-cp37m-manylinux2010_i686.whl", hash = "sha256:9f37713640de77beb83bfd10d6b25fdd3220cd4817eacdf1f316bfaafa8c0390"},
+    {file = "oppai-3.3.0-cp37-cp37m-manylinux2010_x86_64.whl", hash = "sha256:482294ac2a3045a811a618f95d77c365f8d0d871c34859f9c64fa1fd3c70e188"},
+    {file = "oppai-3.3.0-cp38-cp38-manylinux1_i686.whl", hash = "sha256:a246a1f32f00bc6a79b7ceb072d94825e540bdd331af2e240f884a172c7a1a4f"},
+    {file = "oppai-3.3.0-cp38-cp38-manylinux1_x86_64.whl", hash = "sha256:b44bcab5256eeb2a3c2695ef5de77831c0f1c6a4aa9d9c141c98c6237ef44971"},
+    {file = "oppai-3.3.0-cp38-cp38-manylinux2010_i686.whl", hash = "sha256:d24cfdb947fd58a49e0161175a8f6d41856ca6250c2515f673076e3f1ec7ee0b"},
+    {file = "oppai-3.3.0-cp38-cp38-manylinux2010_x86_64.whl", hash = "sha256:c0526d732acb23feebc91b2d23554188f8122b7356293ee20ec86517b779e604"},
+    {file = "oppai-3.3.0-cp39-cp39-manylinux1_i686.whl", hash = "sha256:a9c0880366b482acbb6c3c3ac87b7ff0cc4c5e0d2bf5eb784c6244ca8fd66e44"},
+    {file = "oppai-3.3.0-cp39-cp39-manylinux1_x86_64.whl", hash = "sha256:0eb94ef14d1906abb19c8f422a66eb232e76340f860c03e57c08a4e57ace037e"},
+    {file = "oppai-3.3.0-cp39-cp39-manylinux2010_i686.whl", hash = "sha256:027812f37f9dba9693b8fb35b596dfc2b27fb5db521b39b581c9d532b09ddf00"},
+    {file = "oppai-3.3.0-cp39-cp39-manylinux2010_x86_64.whl", hash = "sha256:a664c6b56edd181f58fb093a4f528e59b8d4b6e8188816b86a5d19c50b043131"},
+    {file = "oppai-3.3.0.tar.gz", hash = "sha256:5278e57c5edd78551c2110e8e7760f95d8200a89141c47b7a17963f7663eaae3"},
 ]
 pydantic = [
     {file = "pydantic-1.6.1-cp36-cp36m-macosx_10_9_x86_64.whl", hash = "sha256:418b84654b60e44c0cdd5384294b0e4bc1ebf42d6e873819424f3b78b8690614"},
