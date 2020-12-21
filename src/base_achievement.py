@@ -3,7 +3,7 @@ import math
 from typing import Dict, List, Any
 
 from src.models.achievement_data import AchievementData
-from src.models.replay import UpdateScore
+from src.models.score import Score
 
 
 class BaseAchievement(abc.ABC):
@@ -17,7 +17,7 @@ class BaseAchievement(abc.ABC):
         self._generate()
 
     @abc.abstractmethod
-    def handle(self, score: UpdateScore) -> List[str]:
+    def handle(self, score: Score) -> List[str]:
         pass
 
     def _generate(self):
