@@ -14,6 +14,11 @@ class Performance:
 
             oppai.ezpp_data(ez, beatmap_data.decode(), len(beatmap_data))
 
+            mods = 0
+            for mod in replay.mods:
+                mods |= mod.value
+
+            oppai.ezpp_set_mods(ez, mods)
             oppai.ezpp_set_combo(ez, replay.max_combo)
             oppai.ezpp_set_nmiss(ez, replay.misses)
             oppai.ezpp_set_accuracy(ez, replay.number_100s, replay.number_50s)
