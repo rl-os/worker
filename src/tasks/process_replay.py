@@ -132,44 +132,21 @@ class ProcessReplay(Task):
 
 if __name__ == '__main__':
     import logging
+    import requests
 
     logging.basicConfig(level=logging.DEBUG)
 
     log = logging.getLogger(__name__)
 
+    beatmap = requests.get(
+        "https://dev.risu.life/api/v2/beatmaps/391998"
+    ).json()
+
     # noinspection PyCallByClass
     ProcessReplay.run({
         "replay_id": 1,
         "key": "replay-3af6b346-a185-46b0-af70-b5115f0f3507.osr",
-        "beatmap": {
-          "id": 100024,
-          "beatmapset_id": 1,
-          "mode": "osu",
-          "mode_int": 0,
-          "convert": False,
-          "difficulty_rating": 2.41,
-          "version": "Normal",
-          "total_length": 142,
-          "hit_length": 109,
-          "bpm": 119,
-          "cs": 4,
-          "drain": 6,
-          "accuracy": 6,
-          "ar": 6,
-          "playcount": 442616,
-          "passcount": 54419,
-          "count_circles": 160,
-          "count_sliders": 0,
-          "count_spinners": 0,
-          "count_total": 0,
-          "is_scoreable": True,
-          "last_updated": "2014-05-18T17:16:42Z",
-          "ranked": 1,
-          "status": "ranked",
-          "url": "https://osu.ppy.sh/beatmaps/75",
-          "deleted_at": "0001-01-01T00:00:00Z",
-          "max_combo": 314
-        },
+        "beatmap": beatmap,
         "user": {
             "avatar_url": "https://301222.selcdn.ru/akasi/avatars/1.png",
             "country_code": "RU",

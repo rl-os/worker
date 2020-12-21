@@ -5,8 +5,8 @@ from datetime import datetime
 
 
 class Failtimes(BaseModel):
-    fail: List[int]
-    exit: List[int]
+    fail: Optional[List[int]]
+    exit: Optional[List[int]]
 
 
 class Beatmap(BaseModel):
