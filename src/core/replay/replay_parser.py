@@ -2,7 +2,7 @@ import lzma
 import struct
 import datetime
 
-from core.replay.parser import Parser
+from src.core.replay.parser import Parser
 from src.models.replay import Replay
 from src.models.replay_event import ReplayEvent
 from src.models.replay_mods import GameMode, Mod
