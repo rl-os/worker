@@ -15,17 +15,17 @@ class Beatmap(BaseModel):
     mode: str
     version: str
     accuracy: int
-    ar: int
-    beatmapset_id: int
     bpm: int
+    ar: float
+    cs: int
+    drain: int
+    beatmapset_id: int
     convert: bool
     count_circles: int
     count_sliders: int
     count_spinners: int
     count_total: int
-    cs: int
     deleted_at: Optional[datetime] = None
-    drain: int
     hit_length: int
     is_scoreable: bool
     last_updated: datetime

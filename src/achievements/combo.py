@@ -1,7 +1,7 @@
 from typing import List
 
-from src.base_achievement import BaseAchievement
-from src.models.replay import ParsedScore
+from src.core.base_achievement import BaseAchievement
+from src.models.score import Score
 from src.models.achievement_data import AchievementData
 
 
@@ -28,11 +28,11 @@ class Combo(BaseAchievement):
     def __init__(self):
         super().__init__()
 
-    def handle(self, score: ParsedScore) -> List[str]:
+    def handle(self, score: Score) -> List[str]:
         achievement_ids = []
 
         for ach in self.achievements:
-            if ach.index > score.maxcombo or ach.mode is not score.mode:
+            if ach.index > score.replay.max_combo or ach.mode is not score.replay.mods:
                 continue
 
             achievement_ids.append(ach.id)

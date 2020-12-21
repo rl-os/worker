@@ -6,10 +6,16 @@ amqp:
   url: 'amqp://guest:guest@127.0.0.1/'
   client_properties:
 
-s3:
-  region_name: 'ru-1a'
+storage:
+  current_storage: s3
 
-  secret_access_key: minioadmin
-  access_key_id: minioadmin
+  replays_path: 'dev_replays'
+  beatmaps_path: 'dev_beatmaps'
 
-  endpoint_url: 'http://127.0.0.1:9000'
+  s3:
+    region_name: 'ru-1a'
+
+    secret_access_key: minioadmin
+    access_key_id: minioadmin
+
+    endpoint_url: 'http://127.0.0.1:9000'

@@ -6,6 +6,24 @@ from typing import Union
 from src.config import config
 
 
+def read_config(path: Union[str, None]):
+    """
+    Загружает конфиг и наполняет с использованием переменных окружения
+    :param path: Путь до файла конфигурации
+    :return:
+    """
+    if path is not None:
+        config.update_from_file(
+            path=path,
+            allow_missing_keys=True
+        )
+
+    config.update_from_env(
+        env_prefix='RL',
+        delimiter='__'
+    )
+
+
 class EntryPoint(celery.Celery):
     TASK_ROUTES = {
         'rl.worker.process_replay': {
@@ -16,7 +34,7 @@ class EntryPoint(celery.Celery):
     }
 
     def __init__(self):
-        self.read_config(os.getenv("CONFIG_PATH") or "config.yaml")
+        read_config(os.getenv("CONFIG_PATH") or "config.yaml")
 
         super().__init__(
             'rl-worker',
@@ -41,23 +59,6 @@ class EntryPoint(celery.Celery):
         )
 
         self.on_after_configure.connect(self.postfork)
-
-    def read_config(self, path: Union[str, None]):
-        """
-        Загружает конфиг и наполняет с использованием переменных окружения
-        :param path: Путь до файла конфигурации
-        :return:
-        """
-        if path is not None:
-            config.update_from_file(
-                path=path,
-                allow_missing_keys=True
-            )
-
-        config.update_from_env(
-            env_prefix='RL',
-            delimiter='__'
-        )
 
     def postfork(self, sender, **kwargs):
         """
